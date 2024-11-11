@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/nareshmarch/Jenkins-file.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    sh 'mvn clean install'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    sh 'mvn test'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    // Insert deployment steps here
+                    // Example: Upload the artifact to a server
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Build and Deployment Successful!'
+        }
+        failure {
+            echo 'Build or Deployment Failed!'
+        }
+    }
+}
